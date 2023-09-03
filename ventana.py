@@ -73,16 +73,36 @@ class InterfazCalculadora:
         label.bind("<Button-1>", lambda event: self.Boton_click(nombreBoton))
         frame.bind("<Button-1>",lambda event: self.Boton_click(nombreBoton))
 
+        #efecto hover sobre el label y el frame
+        frame.bind("<Enter>",lambda event: (frame.config(bg="#4e4b47"),label.config(bg="#4e4b47")) )
+        frame.bind("<Leave>",lambda event: (frame.config(bg=colorBg),label.config(bg=colorBg,fg=colorFg)))
+
         label.place(relx=0.5, rely=0.5, anchor="center")  # Coloca el label en el centro del frame
         return frame
+    
+    def Boton_click(self,nombreBoton):
+        
+        if(nombreBoton=="CLR"):
+            self.label.config(text="0")
+            self.botones_presionados.clear()
+            return
+        
+        self.mostrarEnPantalla(nombreBoton)   
 
-    def Boton_click(self,texto):
+        if(nombreBoton=="="):
+            self.mostrarEnPantalla(texto=str(self.aritmetica.getResultado()))
+            self.label.config(text=str(self.aritmetica.getResultado()))
+            self.botones_presionados.clear()
+            #hacer perdurar el resultado para poder hacer operaciones proximamente
+            self.botones_presionados.append(str(self.aritmetica.getResultado()))
+
+
+    def mostrarEnPantalla(self,texto):
         self.botones_presionados.append(texto)
         texto_mostrado = "".join(self.botones_presionados)  # Convierte la lista en una cadena  
         self.label.config(text=texto_mostrado)
 
-        self.aritmetica.setCaracteresIngresados(texto_mostrado)        
-        
+        self.aritmetica.setCaracteresIngresados(texto_mostrado)
 
 
     
