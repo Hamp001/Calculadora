@@ -2,15 +2,18 @@ import tkinter as tk
 from logica import aritmetica
 class InterfazCalculadora:
  
-    
-    def __init__(self):
+    def __init__(self,colorBgSignos,colorBgNumeros,colorFg,colorEnterMouse):
         #inciar objeto para el manejo de la logica y aritmetica
         self.aritmetica=aritmetica()
         self.botones_presionados=[]
         self.root = tk.Tk()
         self.root.title("Calculadora ")
+        self.colorBgSignos=colorBgSignos #grey
+        self.colorBgNumeros=colorBgNumeros #e98c05
+        self.colorFg=colorFg #white
+        self.colorEnterMouse=colorEnterMouse
         #mensaje o resultado
-        self.label = tk.Label(self.root, text="0",width=5,height=2,font=("Arial", 24),anchor="sw")#recorda que anchor hace referencia a los puntos cardinales para el posicionamiento del label
+        self.label = tk.Label(self.root, text="0",width=5,height=1,font=("Arial", 55),anchor="sw")#recorda que anchor hace referencia a los puntos cardinales para el posicionamiento del label
         #"ew" significa que el widget se expandirá horizontalmente para ocupar el espacio disponible en su columna (parecido a ocmbinar y centrar).
         self.label.grid(row=0, column=0, columnspan=4, sticky="we")
         self.mostrar_cuadricula()
@@ -23,38 +26,38 @@ class InterfazCalculadora:
                 #Colocar caracteres (/,*,-,+, y numeros ) en una posicion especifica 
                 #SIGNOS:
                 if(i == 3 and j==1):
-                    frame=self.establecerBoton("CLR","grey","white")
+                    frame=self.establecerBoton("CLR",self.colorBgSignos,self.colorFg)
                 elif(i==3 and j==2):
-                    frame=self.establecerBoton("=","grey","white")
+                    frame=self.establecerBoton("=",self.colorBgSignos,self.colorFg)
                 elif(i==0 and j==3):
-                    frame=self.establecerBoton("/","grey","white")
+                    frame=self.establecerBoton("/",self.colorBgSignos,self.colorFg)
                 elif(i==1 and j==3):
-                    frame=self.establecerBoton("*","grey","white")
+                    frame=self.establecerBoton("*",self.colorBgSignos,self.colorFg)
                 elif(i==2 and j==3):
-                    frame=self.establecerBoton("-","grey","white")
+                    frame=self.establecerBoton("-",self.colorBgSignos,self.colorFg)
                 elif(i==3 and j==3):
-                    frame=self.establecerBoton("+","grey","white")    
+                    frame=self.establecerBoton("+",self.colorBgSignos,self.colorFg)    
                 #NUMEROS:
                 elif(i==0 and j==0):
-                    frame=self.establecerBoton("7","#e98c05","white")
+                    frame=self.establecerBoton("7",self.colorBgNumeros,self.colorFg)
                 elif(i==0 and j==1):
-                    frame=self.establecerBoton("8","#e98c05","white")
+                    frame=self.establecerBoton("8",self.colorBgNumeros,self.colorFg)
                 elif(i==0 and j==2):
-                    frame=self.establecerBoton("9","#e98c05","white")
+                    frame=self.establecerBoton("9",self.colorBgNumeros,self.colorFg)
                 elif(i==1 and j==0):
-                    frame=self.establecerBoton("4","#e98c05","white")
+                    frame=self.establecerBoton("4",self.colorBgNumeros,self.colorFg)
                 elif(i==1 and j==1):
-                    frame=self.establecerBoton("5","#e98c05","white")
+                    frame=self.establecerBoton("5",self.colorBgNumeros,self.colorFg)
                 elif(i==1 and j==2):
-                    frame=self.establecerBoton("6","#e98c05","white")
+                    frame=self.establecerBoton("6",self.colorBgNumeros,self.colorFg)
                 elif(i==2 and j==0):
-                    frame=self.establecerBoton("1","#e98c05","white")
+                    frame=self.establecerBoton("1",self.colorBgNumeros,self.colorFg)
                 elif(i==2 and j==1):
-                    frame=self.establecerBoton("2","#e98c05","white")
+                    frame=self.establecerBoton("2",self.colorBgNumeros,self.colorFg)
                 elif(i==2 and j==2):
-                    frame=self.establecerBoton("3","#e98c05","white")
+                    frame=self.establecerBoton("3",self.colorBgNumeros,self.colorFg)
                 elif(i==3 and j==0):
-                    frame=self.establecerBoton("0","#e98c05","white")
+                    frame=self.establecerBoton("0",self.colorBgNumeros,self.colorFg)
 
                 frame.grid(row=i+1, column=j)# con bordes :frame.grid(row=i+1, column=j,padx=1, pady=1)
                 #label.pack()
@@ -74,7 +77,7 @@ class InterfazCalculadora:
         frame.bind("<Button-1>",lambda event: self.Boton_click(nombreBoton))
 
         #efecto hover sobre el label y el frame
-        frame.bind("<Enter>",lambda event: (frame.config(bg="#4e4b47"),label.config(bg="#4e4b47")) )
+        frame.bind("<Enter>",lambda event: (frame.config(bg=self.colorEnterMouse),label.config(bg=self.colorEnterMouse)) )
         frame.bind("<Leave>",lambda event: (frame.config(bg=colorBg),label.config(bg=colorBg,fg=colorFg)))
 
         label.place(relx=0.5, rely=0.5, anchor="center")  # Coloca el label en el centro del frame
